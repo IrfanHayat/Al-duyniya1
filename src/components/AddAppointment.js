@@ -18,7 +18,8 @@ export default function AddAppointment({ selectedClientId, setNewAppointmentData
 						setNewAppointmentData(result.data);
 						createNotification('success', result.data.Message);
 					} else {
-						console.log(result);
+						createNotification('error', 'Current Date is in a week');
+						
 					}
 				})
 				.catch(error => {
@@ -75,7 +76,7 @@ export default function AddAppointment({ selectedClientId, setNewAppointmentData
 				<div className="col-sm-12">
 					<div className="d-flex " style={divStyle}>
 						UserId
-                       <div className="ml-3 w-100 border-bottom-custom">
+						<div className="ml-3 w-100 border-bottom-custom">
 							<input
 								type="text"
 								className="border-0 w-100"

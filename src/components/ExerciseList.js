@@ -6,7 +6,15 @@ import Model from './Model';
 import api from '../apiCalls/api';
 
 import AddAppointment from './AddAppointment';
-export const ExerciseList = ({ title, row = false, modelId = '', handleExercise, exerciseData }) => {
+
+export const ExerciseList = ({
+	title,
+	row = false,
+	modelId = '',
+	handleExercise,
+	exerciseData,
+	setEditExerciseData
+}) => {
 	const [getAllExercise, setAllExercise] = useState([]);
 	const [show, setShowModal] = useState(false);
 	const [showExercise, setShowExerciseModal] = useState(false);
@@ -36,6 +44,7 @@ export const ExerciseList = ({ title, row = false, modelId = '', handleExercise,
 		setAllExercise([...getAllExercise, response.SavedExercise]);
 
 		handleClose();
+		editExerciseModalClose();
 	};
 
 	return (
@@ -44,7 +53,11 @@ export const ExerciseList = ({ title, row = false, modelId = '', handleExercise,
 				<AddExcercise setNewExerciseData={setNewExerciseData} />
 			</Model>
 			<Model show={showExercise} title="Edit Exercise" handleClose={editExerciseModalClose}>
-				<EditExerciseDescription selectedEditExercise={selectedEditExercise} />
+				<EditExerciseDescription
+					selectedEditExercise={selectedEditExercise}
+					editExerciseModalClose={editExerciseModalClose}
+					setEditExerciseData={setEditExerciseData}
+				/>
 			</Model>
 			<h3 className="custom-active font-weight-bold mb-0 pl-0">{title}</h3>
 

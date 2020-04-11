@@ -5,15 +5,14 @@ import api from '../apiCalls/api';
 
 const Client = props => {
 	let [exerciseData, setExerciseData] = useState('');
+	let [editExerciseData, setEditExerciseData] = useState('');
 
 	const handleExercise = id => {
 		api.getExerciseById(id).then(exercise => {
-			console.log(exercise.data);
 			setExerciseData(exercise.data);
 		});
 	};
-
-	const { _id, description, file } = exerciseData;
+	const { _id, description, file, createdAt } = exerciseData;
 
 	return (
 		<div className="fluid-container">
@@ -25,31 +24,56 @@ const Client = props => {
 						modelId="addExcersices"
 						handleExercise={handleExercise}
 						exerciseData={exerciseData}
+						setEditExerciseData={setEditExerciseData}
 					/>
 				</ExerciseProvider>
 			</div>
+			{editExerciseData.createdAt == createdAt ? (
+				<div className="col-sm-12 p-3 d-flex flex-wrap-xs ">
+					{String(file)
+						.split('.')
+						.pop() === 'mp4' ||
+					String(file)
+						.split('.')
+						.pop() === 'MP4' ? (
+						<div className="col-md-6 col-sm-12 text-center p-3 border-radius-custom shadow mr-2">
+							<video className="h-100 w-100" src={file} autoPlay controls></video>
+						</div>
+					) : (
+						<div className="col-md-6 col-sm-12 text-center p-3 border-radius-custom shadow mr-2">
+							<img src={editExerciseData.file} />
+						</div>
+					)}
 
-			<div className="col-sm-12 p-3 d-flex flex-wrap-xs ">
-				{String(file)
-					.split('.')
-					.pop() === 'mp4' ||
-				String(file)
-					.split('.')
-					.pop() === 'MP4' ? (
-					<div className="col-md-6 col-sm-12 text-center p-3 border-radius-custom shadow mr-2">
-						<video className="h-100 w-100" src={file} autoPlay controls></video>
+					<div className="col-md-6 col-sm-12 p-3 border-radius-custom shadow">
+						<h3>Description</h3>
+						<p>{editExerciseData.description}</p>
 					</div>
-				) : (
-					<div className="col-md-6 col-sm-12 text-center p-3 border-radius-custom shadow mr-2">
-						<img src={file} />
-					</div>
-				)}
-
-				<div className="col-md-6 col-sm-12 p-3 border-radius-custom shadow">
-					<h3>Description</h3>
-					<p>{description}</p>
 				</div>
-			</div>
+			) : (
+				<div className="col-sm-12 p-3 d-flex flex-wrap-xs ">
+					{String(file)
+						.split('.')
+						.pop() === 'mp4' ||
+					String(file)
+						.split('.')
+						.pop() === 'MP4' ? (
+						<div className="col-md-6 col-sm-12 text-center p-3 border-radius-custom shadow mr-2">
+							<video className="h-100 w-100" src={file} autoPlay controls></video>
+						</div>
+					) : (
+						<div className="col-md-6 col-sm-12 text-center p-3 border-radius-custom shadow mr-2">
+							<img src={file} />
+						</div>
+					)}
+
+					<div className="col-md-6 col-sm-12 p-3 border-radius-custom shadow">
+						<h3>Description</h3>
+						<p>{description}</p>
+					</div>
+				</div>
+			)}
+			;
 		</div>
 	);
 };

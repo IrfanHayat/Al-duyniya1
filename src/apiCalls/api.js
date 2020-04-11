@@ -127,6 +127,16 @@ const getExerciseById = async _id => {
 	}
 };
 
+const getExercisesById = async _id => {
+	try {
+		const res = await axios.get(`${apiConfig.getExerciseById}/${_id}`);
+		console.log(res);
+		return res;
+	} catch (err) {
+		throw err.response;
+	}
+};
+
 const editExercise = async (_id, description) => {
 	const data = {
 		description
@@ -191,5 +201,6 @@ export default {
 	getAllBusyDay,
 	getAppointementsById,
 	deleteClient,
-	editExercise
+	editExercise,
+	getExercisesById
 };
